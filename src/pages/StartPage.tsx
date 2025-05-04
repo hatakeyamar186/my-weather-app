@@ -1,19 +1,22 @@
-import React from "react";
-
 interface StartPageProps {
-  onStart: () => void;
-}
-
-const StartPage: React.FC<StartPageProps> = ({ onStart }) => {
-  return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>🎴 ポーカーゲーム</h1>
-      <p>5枚のカードで最高の役を目指せ！</p>
-      <button onClick={onStart} style={{ fontSize: "24px", padding: "10px 20px" }}>
-        ゲームスタート
-      </button>
-    </div>
-  );
-};
-
-export default StartPage;
+    onStart: () => void;
+  }
+  
+  const StartPage = ({ onStart }: StartPageProps) => {
+    return (
+      <div style={{ padding: '2rem', textAlign: 'center' }}>
+        <h1>服装ガイドへようこそ 👕</h1>
+        <p>このアプリは、現在の天気に応じて今日のおすすめの服装を提案します。</p>
+        <p>東京の天気をもとに提案します。</p>
+        <button 
+          onClick={onStart} 
+          style={{ fontSize: '1.2rem', padding: '0.5rem 1.5rem', marginTop: '1.5rem' }}
+        >
+          はじめる ▶
+        </button>
+      </div>
+    );
+  };
+  
+  export default StartPage;
+  

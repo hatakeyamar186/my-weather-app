@@ -1,20 +1,17 @@
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ResultPage: React.FC = () => {
-  const location = useLocation();
+const ResultPage = () => {
   const navigate = useNavigate();
-  const { result } = location.state as { result: string };
-
-  const handleRestart = () => {
-    navigate("/");
-  };
 
   return (
-    <div style={{ textAlign: "center", marginTop: "100px" }}>
-      <h1>ゲーム終了！</h1>
-      <p>あなたの役は：{result}</p>
-      <button onClick={handleRestart} style={{ fontSize: "24px", padding: "10px 20px" }}>
-        もう一度プレイ
+    <div style={{ padding: '2rem', textAlign: 'center' }}>
+      <h1>提案が完了しました ✅</h1>
+      <p>今日の服装が決まりましたか？</p>
+      <button
+        onClick={() => navigate('/')}
+        style={{ marginTop: '1rem', padding: '0.5rem 1.2rem', fontSize: '1rem' }}
+      >
+        最初に戻る ↩
       </button>
     </div>
   );
