@@ -7,15 +7,16 @@ const Home = () => {
   const [loading, setLoading] = useState(true)
 
   // ★ ここにAPIキーを直書き ★
-  const API_KEY = 'your_actual_api_key_here' // ← ここに自分のOpenWeatherMap APIキーを入力！
+  const API_KEY = 'aabc29d8b83937fa574e6e46beebba54' // ← ここに自分のOpenWeatherMap APIキーを入力！
 
   useEffect(() => {
     const fetchWeather = async () => {
       try {
         const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=${API_KEY}`
+          `https://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=aabc29d8b83937fa574e6e46beebba54`
         )
         const data = await res.json()
+        console.log(data); // デバッグ用：APIからのレスポンスをコンソールに表示
         setTemp(data.main.temp)
       } catch (error) {
         console.error('天気情報の取得に失敗しました。', error)
