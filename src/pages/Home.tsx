@@ -6,25 +6,43 @@ import ClothingSuggestion from '../components/ClothingSuggestion'
 const Home = () => {
   const [temp, setTemp] = useState<number | null>(null)
   const [loading, setLoading] = useState(true)
+  const [error, setError] = useState<string | null>(null)
   const navigate = useNavigate()
 
-  // ★ ここにAPIキーを直書き ★
-  const API_KEY = 'aabc29d8b83937fa574e6e46beebba54' // ← ここに自分のOpenWeatherMap APIキーを入力！
+  const API_KEY = 'aabc29d8b83937fa574e6e46beebba54'
 
   useEffect(() => {
-    const fetchWeather = async () => {
-      try {
-        const res = await fetch(
-          `https://api.openweathermap.org/data/2.5/weather?q=Tokyo&units=metric&appid=aabc29d8b83937fa574e6e46beebba54`
-        )
-        const data = await res.json()
-        console.log(data); // デバッグ用：APIからのレスポンスをコンソールに表示
-        setTemp(data.main.temp)
-      } catch (error) {
-        console.error('天気情報の取得に失敗しました。', error)
-      } finally {
-        setLoading(false)
-      }
+    const fetchWeather = () => {
+      navigator.geolocation.getCurrentPosition(
+        async (position) => {
+          const lat = position.coords.latitude
+          const lon = position.coords.longitude
+
+          try {
+            const res = await fetch(
+              `https://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lon}&units=metric&appid=${API_KEY}`
+            )
+            const data = await res.json()
+            console.log(data)
+
+            if (data.main && typeof data.main.temp === 'number') {
+              setTemp(data.main.temp)
+            } else {
+              setError('天気データが取得できませんでした')
+            }
+          } catch (error) {
+            console.error('天気情報の取得に失敗しました。', error)
+            setError('天気情報の取得に失敗しました。')
+          } finally {
+            setLoading(false)
+          }
+        },
+        (geoError) => {
+          console.error('位置情報取得に失敗:', geoError)
+          setError('位置情報を取得できませんでした')
+          setLoading(false)
+        }
+      )
     }
 
     fetchWeather()
@@ -35,6 +53,8 @@ const Home = () => {
       <h1>服装ガイド</h1>
       {loading ? (
         <p>天気を取得中...</p>
+      ) : error ? (
+        <p>{error}</p>
       ) : temp !== null ? (
         <>
           <WeatherDisplay temperature={temp} />
