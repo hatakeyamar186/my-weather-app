@@ -10,6 +10,7 @@ import {
 import StartPage from './pages/StartPage'
 import Home from './pages/Home'
 import ResultPage from './pages/ResultPage'
+import ClosetPage from './pages/ClosetPage'
 
 const StartPageWrapper = () => {
   const navigate = useNavigate()
@@ -24,6 +25,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
         <Route path="/home" element={<Home />} />
         <Route path="/result" element={<ResultPage />} />
         <Route path="*" element={<div>404 Not Found</div>} />
+        <Route path="/closet" element={<ClosetPage />} />
       </Routes>
     </HashRouter>
   </React.StrictMode>
