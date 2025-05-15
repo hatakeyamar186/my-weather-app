@@ -68,7 +68,7 @@ const Home = () => {
       const allClothes: ClothingItem[] = JSON.parse(stored)
 
       const matched = allClothes.filter((item) => {
-        const match = item.tempRange.match(/(\d+)-(\d+)/)
+        const match = item.tempRange.match(/(\d+)[～~\-ー－—―‐−](\d+)/)
         if (!match) return false;
          
         const min = parseInt(match[1], 10)

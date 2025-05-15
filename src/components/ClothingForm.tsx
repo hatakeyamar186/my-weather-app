@@ -13,6 +13,13 @@ interface ClothingFormProps {
   onAdd: (item: ClothingItem) => void
 }
 
+const toHalfWidth = (str: string) => {
+    return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248))
+}
+
+const normalizedTempRange = (input: string) => 
+    toHalfWidth(input).replace(/[〜~ー－—―‐−]/g, '-')
+
 const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
@@ -21,11 +28,13 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   const handleSubmit = () => {
     if (!name || !category || !tempRange) return
 
+    const cleanedRange = normalizedTempRange(tempRange)
+
     const newItem: ClothingItem = {
       id: crypto.randomUUID(), // ランダムなID
       name,
       category,
-      tempRange,
+      tempRange: cleanedRange,
     }
 
     onAdd(newItem) // 親コンポーネントに新しい服を渡す
