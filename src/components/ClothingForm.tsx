@@ -16,6 +16,18 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
   const [tempRange, setTempRange] = useState('')
+  const [imageData, setImageData] = useState<string | null>(null)
+
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0]
+    if (file) {
+      const reader = new FileReader()
+      reader.onload = () => {
+        setImageData(reader.result as string)
+      }
+      reader.readAsDataURL(file)
+    }
+  }
 
   const handleSubmit = () => {
     if (!name || !category || !tempRange) return
@@ -27,6 +39,7 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
       name,
       category,
       tempRange: cleanedRange,
+      image: imageData || undefined,
     }
 
     onAdd(newItem) // 親コンポーネントに新しい服を渡す
@@ -35,6 +48,7 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
     setName('')
     setCategory('')
     setTempRange('')
+    setImageData(null)
   }
 
   return (
@@ -57,6 +71,21 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
         onChange={e => setTempRange(e.target.value)}
         style={{ marginRight: '0.5rem' }}
       />
+      {/*画像アップロード*/}
+      <input
+        type="file"
+        accept="image/*"
+        onChange={handleImageChange}
+        style={{ marginRight: '0.5rem', marginTop: '0.5rem' }}
+      />
+      {/* 画像プレビュー */}
+      {imageData && (
+        <img
+          src={imageData}
+          alt="選択された服の画像"
+          style={{ width: '80px', height: '80px', objectFit: 'cover', display: 'block', marginTop: '0.5rem' }}
+        />
+      )}
       <button onClick={handleSubmit}>登録</button>
     </div>
   )
