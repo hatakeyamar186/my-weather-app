@@ -1,4 +1,4 @@
-import { ClothingItem } from './ClothingForm'
+import { ClothingItem } from '../types'
 
 interface ClothingListProps {
   clothes: ClothingItem[]

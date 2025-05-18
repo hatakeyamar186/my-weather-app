@@ -2,13 +2,7 @@ import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import WeatherDisplay from '../components/WeatherDisplay'
 import ClothingSuggestion from '../components/ClothingSuggestion'
-
-interface ClothingItem {
-  id: string
-  name: string
-  category: string
-  tempRange: string
-}
+import { ClothingItem } from '../types'
 
 const Home = () => {
   const [temp, setTemp] = useState<number | null>(null)

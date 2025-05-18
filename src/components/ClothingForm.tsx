@@ -1,13 +1,5 @@
-// src/components/ClothingForm.tsx
 import { useState } from 'react'
-
-// 服の型（ClothingItem）をこの中に定義してもOKですが、将来共通化するなら types.ts に移動
-export interface ClothingItem {
-  id: string
-  name: string
-  category: string
-  tempRange: string // 例: "10〜18"
-}
+import { ClothingItem } from '../types'
 
 interface ClothingFormProps {
   onAdd: (item: ClothingItem) => void
