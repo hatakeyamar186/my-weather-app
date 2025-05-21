@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react'
-import ClothingForm, { ClothingItem } from '../components/ClothingForm'
+import ClothingForm from '../components/ClothingForm'
+import { ClothingItem } from '../types'
 import ClothingList from '../components/ClothingList'
 import { useNavigate } from 'react-router-dom'
 
