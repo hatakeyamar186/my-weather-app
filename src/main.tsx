@@ -1,3 +1,4 @@
+import './index.css'; 
 import React from 'react'
 import ReactDOM from 'react-dom/client'
 import {
@@ -11,7 +12,6 @@ import StartPage from './pages/StartPage'
 import Home from './pages/Home'
 import ResultPage from './pages/ResultPage'
 import ClosetPage from './pages/ClosetPage'
-import './index.css'; 
 
 const StartPageWrapper = () => {
   const navigate = useNavigate()

@@ -1,4 +1,5 @@
 import { ClothingItem } from '../types'
+import './clothing-list.css'
 
 interface ClothingListProps {
   clothes: ClothingItem[]
@@ -6,31 +7,40 @@ interface ClothingListProps {
 }
 
 const ClothingList = ({ clothes, onDelete }: ClothingListProps) => {
-  return (
-    <ul>
-      {clothes.map(item => (
-        <li key={item.id} style={{ marginBottom: '0.5rem' }}>
-          <div>
-            ✅ {item.name}（{item.category}）｜{item.tempRange}
-            <button
-              onClick={() => onDelete(item.id)}
-              style={{ marginLeft: '1rem' }}
-            >
-              削除
-            </button>
-          </div>
+  if (clothes.length === 0) {
+    return <p className="no-items">登録された服はありません。</p>
+  }
 
-          {/* 画像がある場合は表示 */}
-          {item.image && (
-            <img
-              src={item.image}
-              alt={`${item.name}の画像`}
-              style={{ width: '80px', height: '80px', objectFit: 'cover', marginTop: '0.3rem' }}
-            />
-          )}
-        </li>
-      ))}
-    </ul>
+  return (
+    <div className="container">
+      <ul className="card-list">
+        {clothes.map(item => (
+          <li key={item.id} className="card">
+            {item.image && (
+              <img
+                src={item.image}
+                alt={`${item.name}の画像`}
+                className="card-image"
+              />
+            )}
+            <div className="card-content">
+              <div>
+                <p className="card-title">{item.name}</p>
+                <p className="card-subtext">
+                  カテゴリ：{item.category}｜気温：{item.tempRange}
+                </p>
+              </div>
+              <button
+                onClick={() => onDelete(item.id)}
+                className="card-delete"
+              >
+                削除
+              </button>
+            </div>
+          </li>
+        ))}
+      </ul>
+    </div>
   )
 }
 

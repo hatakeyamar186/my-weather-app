@@ -28,14 +28,17 @@ const ClosetPage = () => {
   }
 
   return (
-    <main style={{ padding: '2rem' }}>
-      <h1>👕 あなたのクローゼット</h1>
+    <main className="p-6 max-w-2xl mx-auto space-y-8">
+      <h1 className="text-2xl font-bold mb-4">👕 あなたのクローゼット</h1>
+
       <ClothingForm onAdd={handleAdd} />
-      <h2>🧾 登録済みの服</h2>
+
+      <h2 className="text-xl font-semibold mt-8 mb-2">🧾 登録済みの服</h2>
       <ClothingList clothes={clothes} onDelete={handleDelete} />
+      
       <button
         onClick= {() => navigate(-1)}
-        style={{ marginTop: '1.5rem', padding: '0.5rem 1rem' }}
+        className="mt-8 px-4 py-2 bg-gray-200 hover:bg-gray-300 text-gray-800 rounded shadow"
         >
             ← 前のページに戻る
         </button>
