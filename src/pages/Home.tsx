@@ -36,6 +36,29 @@ const Home = () => {
             } else {
               setError('天気データが取得できませんでした')
             }
+
+            const nominatimRes = await fetch(
+              `https://nominatim.openstreetmap.org/reverse?lat=${lat}&lon=${lon}&format=json`
+            )
+            const nominatimData = await nominatimRes.json()
+            const address = nominatimData.address
+
+            let cityName = ''
+            if (address) {
+              // 「赤川町」「赤川」など、suburb, town, village, neighbourhoodのいずれか
+              const place = address.suburb || address.town || address.village || address.neighbourhood
+              const city = address.city || address.county // 函館市
+              if (city && place) {
+                cityName = `${city}${place}`
+              } else if (city) {
+                cityName = city
+              } else {
+                cityName = nominatimData.display_name || data.name
+              }
+            } else {
+              cityName = nominatimData.display_name || data.name
+            }
+            setLocation(cityName)
           } catch (error) {
             console.error('天気情報の取得に失敗しました。', error)
             setError('天気情報の取得に失敗しました。')
@@ -64,7 +87,7 @@ const Home = () => {
       const matched = allClothes.filter((item) => {
         const match = item.tempRange.match(/(\d+)[～~\-ー－—―‐−](\d+)/)
         if (!match) return false;
-         
+
         const min = parseInt(match[1], 10)
         const max = parseInt(match[2], 10)
         return temp >= min && temp <= max
@@ -83,15 +106,15 @@ const Home = () => {
         <p>{error}</p>
       ) : temp !== null ? (
         <>
-        {location && <h2>{location}の現在の気温</h2>}
+          {location && <h2>{location}</h2>}
 
-        {iconCode && (
-          <img
-            src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
-            alt="Weather icon"
-            style={{ width: '80px', height: '80px' }}
-          />
-        )}
+          {iconCode && (
+            <img
+              src={`https://openweathermap.org/img/wn/${iconCode}@2x.png`}
+              alt="Weather icon"
+              style={{ width: '80px', height: '80px' }}
+            />
+          )}
           <WeatherDisplay temperature={temp} />
           <ClothingSuggestion temperature={temp} />
 
@@ -107,7 +130,7 @@ const Home = () => {
               </ul>
             </div>
           ) : (
-            <p style={{marginTop: '1.5rem'}}>
+            <p style={{ marginTop: '1.5rem' }}>
               登録された服の中に、今日の気温に合う服はみつかりませんでした。
             </p>
           )}
