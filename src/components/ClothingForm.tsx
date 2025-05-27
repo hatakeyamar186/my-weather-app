@@ -6,11 +6,11 @@ interface ClothingFormProps {
 }
 
 const toHalfWidth = (str: string) => {
-    return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248))
+  return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248))
 }
 
-const normalizedTempRange = (input: string) => 
-    toHalfWidth(input).replace(/[〜~ー－—―‐−]/g, '-')
+const normalizedTempRange = (input: string) =>
+  toHalfWidth(input).replace(/[〜~ー－—―‐−]/g, '-')
 
 const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   const [name, setName] = useState('')
@@ -59,12 +59,19 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
         onChange={e => setName(e.target.value)}
         style={{ marginRight: '0.5rem' }}
       />
-      <input
-        placeholder="カテゴリ"
+      <select
         value={category}
         onChange={e => setCategory(e.target.value)}
         style={{ marginRight: '0.5rem' }}
-      />
+      >
+        <option value="">カテゴリ</option>
+        <option value="トップス">トップス</option>
+        <option value="ボトムス">ボトムス</option>
+        <option value="アウター">アウター</option>
+        <option value="ワンピース・セットアップ">ワンピース・セットアップ</option>
+        <option value="シューズ">シューズ</option>
+        <option value="その他">その他</option>
+      </select>
       <input
         placeholder="推奨気温（例：10〜18）"
         value={tempRange}

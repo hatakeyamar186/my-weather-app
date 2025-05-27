@@ -28,7 +28,14 @@ const ClosetPage = () => {
   }
 
   return (
-    <main className="p-6 max-w-2xl mx-auto space-y-8">
+    <main 
+      style={{
+        padding: '2rem',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }}>
       <h1 className="text-2xl font-bold mb-4">👕 あなたのクローゼット</h1>
 
       <ClothingForm onAdd={handleAdd} />
