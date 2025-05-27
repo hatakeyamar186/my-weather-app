@@ -98,7 +98,14 @@ const Home = () => {
   }, [temp])
 
   return (
-    <main style={{ padding: '2rem' }}>
+    <main style={{ 
+      padding: '2rem',
+      minHeight: '100vh',
+      display: 'flex',
+      flexDirection: 'column',
+      // justifyContent: 'center',　表示される内容の高さを調整
+      alignItems: 'center',
+      }}>
       <h1>服装ガイド</h1>
       {loading ? (
         <p>天気を取得中...</p>
