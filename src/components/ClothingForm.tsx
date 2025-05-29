@@ -5,17 +5,19 @@ interface ClothingFormProps {
   onAdd: (item: ClothingItem) => void
 }
 
-const toHalfWidth = (str: string) => {
-  return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248))
-}
+// const toHalfWidth = (str: string) => {
+//   return str.replace(/[０-９]/g, s => String.fromCharCode(s.charCodeAt(0) - 65248))
+// }
 
-const normalizedTempRange = (input: string) =>
-  toHalfWidth(input).replace(/[〜~ー－—―‐−]/g, '-')
+// const normalizedTempRange = (input: string) =>
+//   toHalfWidth(input).replace(/[〜~ー－—―‐−]/g, '-')
+const temperatureOptions = Array.from({ length: 41 }, (_, i) => i - 10)
 
 const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   const [name, setName] = useState('')
   const [category, setCategory] = useState('')
-  const [tempRange, setTempRange] = useState('')
+  const [minTemp, setMinTemp] = useState<number | ''>('')
+  const [maxTemp, setMaxTemp] = useState<number | ''>('')
   const [imageData, setImageData] = useState<string | null>(null)
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -30,15 +32,13 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
   }
 
   const handleSubmit = () => {
-    if (!name || !category || !tempRange) return
-
-    const cleanedRange = normalizedTempRange(tempRange)
+    if (!name || !category || minTemp === '' || maxTemp === '' || minTemp > maxTemp) return
 
     const newItem: ClothingItem = {
       id: crypto.randomUUID(), // ランダムなID
       name,
       category,
-      tempRange: cleanedRange,
+      tempRange: `${minTemp}〜${maxTemp}`,
       image: imageData || undefined,
     }
 
@@ -47,7 +47,8 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
     // 入力欄をクリア
     setName('')
     setCategory('')
-    setTempRange('')
+    setMinTemp('')
+    setMaxTemp('')
     setImageData(null)
   }
 
@@ -72,12 +73,34 @@ const ClothingForm = ({ onAdd }: ClothingFormProps) => {
         <option value="シューズ">シューズ</option>
         <option value="その他">その他</option>
       </select>
-      <input
+      {/* <input
         placeholder="推奨気温（例：10〜18）"
         value={tempRange}
         onChange={e => setTempRange(e.target.value)}
         style={{ marginRight: '0.5rem' }}
-      />
+      /> */}
+      <span style={{ display: 'inline-flex', alignItems: 'center', marginRight: '0.5rem' }}>
+        <select
+          value={minTemp}
+          onChange={e => setMinTemp(Number(e.target.value))}
+          style={{ marginRight: '0.3rem' }}
+        >
+          <option value="">低</option>
+          {temperatureOptions.map(temp => (
+            <option key={temp} value={temp}>{temp}℃</option>
+          ))}
+        </select>
+        <span style={{ margin: '0 0.3rem' }}>〜</span>
+        <select
+          value={maxTemp}
+          onChange={e => setMaxTemp(Number(e.target.value))}
+        >
+          <option value="">高</option>
+          {temperatureOptions.map(temp => (
+            <option key={temp} value={temp}>{temp}℃</option>
+          ))}
+        </select>
+      </span>
       {/*画像アップロード*/}
       <input
         type="file"
