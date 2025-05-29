@@ -130,7 +130,14 @@ const Home = () => {
               <h2>🧥 あなたの服からのおすすめ</h2>
               <ul>
                 {recommended.map((item) => (
-                  <li key={item.id}>
+                  <li key={item.id} style={{ display: 'flex', alignItems: 'center', marginBottom: '0.5rem' }}>
+                    {item.image && (
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        style={{ width: '48px', height: '48px', objectFit: 'cover', marginRight: '0.7rem', borderRadius: '6px' }}
+                      />
+                    )}
                     {item.name} ({item.category}) | {item.tempRange}℃
                   </li>
                 ))}
