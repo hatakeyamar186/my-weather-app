@@ -13,7 +13,7 @@ const Home = () => {
   const navigate = useNavigate()
   const [recommended, setRecommended] = useState<ClothingItem[]>([])
 
-  const API_KEY = 'aabc29d8b83937fa574e6e46beebba54'
+  const API_KEY = import.meta.env.VITE_OPENWEATHER_API_KEY;
 
   useEffect(() => {
     const fetchWeather = () => {
