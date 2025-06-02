@@ -78,23 +78,21 @@ const Home = () => {
   }, [])
 
   useEffect(() => {
-    if (temp == null) return;
-
+    if (temp === null) return
     const stored = localStorage.getItem('clothes')
-    if (stored) {
-      const allClothes: ClothingItem[] = JSON.parse(stored)
-
-      const matched = allClothes.filter((item) => {
-        const match = item.tempRange.match(/(\d+)[～~\-ー－—―‐−](\d+)/)
-        if (!match) return false;
-
-        const min = parseInt(match[1], 10)
-        const max = parseInt(match[2], 10)
-        return temp >= min && temp <= max
-      })
-
-      setRecommended(matched)
+    if (!stored) {
+      setRecommended([])
+      return
     }
+    const clothes: ClothingItem[] = JSON.parse(stored)
+    // tempRangeが「10〜18」などの形式なので、分割して判定
+    const filtered = clothes.filter(item => {
+      if (!item.tempRange) return false
+      const [min, max] = item.tempRange.split('〜').map(Number)
+      if (isNaN(min) || isNaN(max)) return false
+      return temp >= min && temp <= max
+    })
+    setRecommended(filtered)
   }, [temp])
 
   return (
