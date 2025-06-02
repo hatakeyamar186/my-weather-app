@@ -46,6 +46,31 @@ React + TypeScript + Viteで開発されています。
 
 ---
 
+## ディレクトリ構成
+
+src/
+├──components/
+│  ├──clothing_list.css
+│  ├──ClothingForm.tsx
+│  ├──ClothingList.tsx
+│  ├──ClothingSuggestion.tsx
+│  └──WeatherDisplay.tsx
+├──pages
+│  ├──ClosetPage.tsx
+│  ├──Home.tsx
+│  ├──ResultPage.tsx
+│  └──StartPage.tsx
+├──App.tsx
+├──index.css
+├──main.tsx
+├──types.ts
+├──vite-env.d.ts
+├──tsconfig.json
+├──tsconfig.node.json
+└──vite.config.ts
+
+---
+
 ## 開発・起動方法
 
 ```bash
